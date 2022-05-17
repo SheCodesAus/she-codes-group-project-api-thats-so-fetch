@@ -46,7 +46,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=150, blank=True, null=True)
     location = models.CharField(max_length=30, blank=True, null=True)
     profile_photo = models.ImageField(null=True, upload_to='uploads/profile_pictures/', default='uploads/profile_pictures/default.png')
-    Banner_photo = models.ImageField(null=True, blank=True, upload_to='uploads/profile_pictures/', default='uploads/profile_pictures/default.png')
+    banner_photo = models.ImageField(null=True, blank=True, upload_to='uploads/profile_pictures/', default='uploads/profile_pictures/default.png')
     linkedin_url = models.CharField(max_length=255, null=True, blank=True, unique=True)
     website_url = models.CharField(max_length=255, null=True, blank=True, unique=True)
     social_media = models.CharField(max_length=255, null=True, blank=True, unique=True)

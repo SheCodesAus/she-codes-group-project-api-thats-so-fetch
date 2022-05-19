@@ -2,13 +2,13 @@ from django.shortcuts import render
 from rest_framework import status, generics, permissions 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import  Articles, Comment
+from .models import  Articles 
 
 from django.http import Http404
 from rest_framework import status
 from .permissions import  IsOwnerOrReadOnly
 from .serializers import (
-    CommentSerializer,
+   
     ArticlesDetailSerializer,
     
 )
@@ -16,24 +16,51 @@ from .serializers import (
 #CategorySerializer add in later
 
 
-class CommentList(APIView):
+# class CommentList(APIView):
+
+#     def get(self, request):
+#         comments = Comment.objects.all()
+#         serializer = CommentSerializer(comments, many=True)
+#         return Response(serializer.data)
+        
+#     def post(self, request):
+#         serializer = CommentSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save(supporter=request.user)
+#             return Response(
+#                 serializer.data,
+#                 status=status.HTTP_201_CREATED
+#                 )
+#         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+
+class ArticlesList(APIView):
+    permission_classes = [
+            permissions.IsAuthenticatedOrReadOnly, 
+            IsOwnerOrReadOnly
+        ]
 
     def get(self, request):
-        comments = Comment.objects.all()
-        serializer = CommentSerializer(comments, many=True)
-        return Response(serializer.data)
+        articles = Article.objects.all()
         
+        order_by = request.query_params.get('order_by', None)
+        if order_by:
+            articles = articles.order_by(order_by)
+
+        serializer = ArticlesSerializer(articles, many=True)
+        return Response(serializer.data)
+
     def post(self, request):
-        serializer = CommentSerializer(data=request.data)
+        serializer = ArticlesSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(supporter=request.user)
+            serializer.save(author=request.user)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
-                )
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-
-
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+            )
 
 class ArticlesDetail(APIView):
     permission_classes = [

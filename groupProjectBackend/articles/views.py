@@ -7,11 +7,7 @@ from .models import  Articles
 from django.http import Http404
 from rest_framework import status
 from .permissions import  IsOwnerOrReadOnly
-from .serializers import (
-   
-    ArticlesDetailSerializer,
-    
-)
+from .serializers import ArticlesSerializer, ArticlesDetailSerializer
 
 #CategorySerializer add in later
 
@@ -40,7 +36,7 @@ class ArticlesList(APIView):
         ]
 
     def get(self, request):
-        articles = Article.objects.all()
+        articles = Articles.objects.all()
         
         order_by = request.query_params.get('order_by', None)
         if order_by:

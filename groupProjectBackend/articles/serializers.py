@@ -13,6 +13,7 @@ class ArticlesSerializer(serializers.Serializer):
     # author = serializers.ReadOnlyField(source='user.id')
     # comment = CommentSerializer(many=True, read_only=True)
     category = serializers.SlugRelatedField(slug_field='slug', queryset=Category.objects.all())
+    # this is a test
 
     def create(self, validated_data):
         return Articles.objects.create(**validated_data)

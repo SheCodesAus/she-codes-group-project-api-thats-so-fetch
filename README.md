@@ -3,4 +3,4 @@
 #Created apps
 #macklin danke!
 
-Tracy can you see this? :)
+Tracy can see this :)

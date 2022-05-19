@@ -12,6 +12,7 @@ class Articles(models.Model):
     #     on_delete=models.CASCADE,
     #     related_name='author_article'
     #     )
+    # this is a test
 
     category = models.ForeignKey(
         'Category',

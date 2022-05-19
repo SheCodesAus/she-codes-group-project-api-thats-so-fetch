@@ -4,22 +4,6 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-
-# class CommentSerializer(serializers.Serializer):
-#     id = serializers.ReadOnlyField()
-#     message = serializers.CharField(max_length=200)
-#     anonymous = serializers.BooleanField()
-#     # supporter = serializers.SlugRelatedField(
-#     #     slug_field= 'username', 
-#     #     queryset= get_user_model().objects.all()
-#     # )
-#     articles_id = serializers.IntegerField()
-#     # message_type = MessageTypeSerializer(many=False, read_only=False)
-#     supporter = serializers.ReadOnlyField(source='supporter.id')
-
-#     def create(self, validated_data):
-#         return Comment.objects.create(**validated_data)
-
 class ArticlesSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
     title = serializers.CharField(max_length=200)
@@ -46,35 +30,6 @@ class ArticlesDetailSerializer(ArticlesSerializer):
           instance.save()
           return instance
 
-
-# class MessageSerializer(serializers.ModelSerializer):
-#     author = serializers.SlugRelatedField(
-#         slug_field="username",
-#         read_only="true",
-#     )
-
-#     class Meta:
-#         model = Message
-#         # fields = []
-#         exclude = ["visible"]
-
-# class ProjectMessageSerializer(serializers.ModelSerializer):
-#     author = serializers.SlugRelatedField(
-#         slug_field="username",
-#         read_only="true",
-#         # queryset=User.objects.all()
-#     )
-
-#     class Meta:
-#         model = Message
-#         # fields = []
-#         exclude = ["visible", "project"]        
-
-
-
-
-
-
 # maybe someone can suggest a way to buld this 
 
 # class CategorySerializer(serializers.Serializer):
@@ -86,3 +41,18 @@ class ArticlesDetailSerializer(ArticlesSerializer):
 #         return Category.objects.create(**validated_data)
 # and a link within ProjectSerializer
 # category = CategorySerializer(many=False, read_only=False)
+
+# class CommentSerializer(serializers.Serializer):
+#     id = serializers.ReadOnlyField()
+#     message = serializers.CharField(max_length=200)
+#     anonymous = serializers.BooleanField()
+#     # supporter = serializers.SlugRelatedField(
+#     #     slug_field= 'username', 
+#     #     queryset= get_user_model().objects.all()
+#     # )
+#     articles_id = serializers.IntegerField()
+#     # message_type = MessageTypeSerializer(many=False, read_only=False)
+#     supporter = serializers.ReadOnlyField(source='supporter.id')
+
+#     def create(self, validated_data):
+#         return Comment.objects.create(**validated_data)

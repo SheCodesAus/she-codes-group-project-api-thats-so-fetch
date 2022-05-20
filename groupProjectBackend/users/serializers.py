@@ -1,13 +1,13 @@
 
 from rest_framework import serializers
 from .models import CustomUser
-from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
+# This is the create profile section?
 class CustomUserSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
-    username = serializers.CharField(max_length=200)
+    # username = serializers.CharField(max_length=200)
     email = serializers.CharField(max_length=200)
     avatar = serializers.URLField()
     bio = serializers.CharField(max_length=600)
@@ -26,7 +26,7 @@ class CustomUserDetailSerializer(CustomUserSerializer):
             instance.save()
             return instance
 
-
+# Create a user account
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
             required=True,

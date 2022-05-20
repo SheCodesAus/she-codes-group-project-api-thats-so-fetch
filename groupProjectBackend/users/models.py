@@ -36,9 +36,6 @@ from django.contrib.auth.models import AbstractUser
 #         return user
 
 class CustomUser(AbstractUser):
-    user_name = models.CharField(max_length=150, unique=True, null=True, blank=True)
-    email = models.EmailField(_('email address'), unique=True)
-    first_name = models.CharField(max_length=150, blank=True, null=True)
     is_mentor = models.BooleanField(default=False)
     is_student = models.BooleanField(default=False)
     profile_photo = models.URLField(null=True, blank=True)
@@ -47,6 +44,9 @@ class CustomUser(AbstractUser):
     social_link = models.CharField(max_length=255, null=True, blank=True, unique=True)
     bio = models.TextField(max_length=500, blank=True, null=True)
     # interests??
+    
+    def __str__(self):
+        return self.username
      
 #defining that we are using custom account manager  
     # objects = CustomAccountManager()

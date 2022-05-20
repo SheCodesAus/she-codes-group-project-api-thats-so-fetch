@@ -9,9 +9,17 @@ class CustomUserSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
     username = serializers.CharField(max_length=200)
     email = serializers.CharField(max_length=200)
-    avatar = serializers.URLField()
-    bio = serializers.CharField(max_length=600)
-    website = serializers.URLField()
+    is_mentor = serializers.BooleanField()
+    is_student = serializers.BooleanField()
+    profile_photo = serializers.URLField()
+    banner_photo = serializers.URLField()
+    location = serializers.CharField(max_length=30)
+    social_link = serializers.CharField(max_length=255)
+    bio = serializers.TextField(max_length=500)
+    coffee = serializers.BooleanField()
+    mentoring = serializers.BooleanField()
+    tutoring = serializers.BooleanField()
+    public_speaking = serializers.BooleanField()
 
     def create(self, validated_data):
           return CustomUser.objects.create(**validated_data)
@@ -20,9 +28,18 @@ class CustomUserSerializer(serializers.Serializer):
 class CustomUserDetailSerializer(CustomUserSerializer):
         def update(self, instance, validated_data):
             instance.username = validated_data.get('username',instance.username)
-            instance.avatar = validated_data.get('avatar', instance.avatar)
-            instance.bio = validated_data.get('bio', instance.bio)
-            instance.website = validated_data.get('website', instance.website)
+            instance.email = validated_data.get('email',instance.email)
+            instance.is_mentor = validated_data.get('is_mentor',instance.is_mentor)
+            instance.is_student = validated_data.get('is_student',instance.is_student)
+            instance.profile_photo = validated_data.get('profile_photo',instance.profile_photo)
+            instance.banner_photo = validated_data.get('banner_photo',instance.banner_photo)
+            instance.location = validated_data.get('location',instance.location)
+            instance.social_link = validated_data.get('social_link',instance.social_link)
+            instance.bio = validated_data.get('bio',instance.bio)
+            instance.coffee = validated_data.get('coffee',instance.coffee)
+            instance.mentoring = validated_data.get('mentoring',instance.mentoring)
+            instance.tutoring = validated_data.get('tutoring',instance.tutoring)
+            instance.public_speaking = validated_data.get('public_speaking',instance.public_speaking)
             instance.save()
             return instance
 

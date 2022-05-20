@@ -1,6 +1,4 @@
 from django.db import models
-# from django.contrib.auth.models import AbstractUser
-from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractUser
 # the below imports are from the django.contrib.auth.models (line 5) 
@@ -36,14 +34,18 @@ from django.contrib.auth.models import AbstractUser
 #         return user
 
 class CustomUser(AbstractUser):
-    is_mentor = models.BooleanField(default=False)
-    is_student = models.BooleanField(default=False)
+    is_mentor = models.BooleanField(default=False, null=True, blank=True)
+    is_student = models.BooleanField(default=False, null=True, blank=True)
     profile_photo = models.URLField(null=True, blank=True)
     banner_photo = models.URLField(null=True, blank=True)
     location = models.CharField(max_length=30, blank=True, null=True)
     social_link = models.CharField(max_length=255, null=True, blank=True, unique=True)
     bio = models.TextField(max_length=500, blank=True, null=True)
-    # interests??
+    # INTERESTS
+    coffee = models.BooleanField(default=False, null=True, blank=True)
+    mentoring = models.BooleanField(default=False, null=True, blank=True)
+    tutoring = models.BooleanField(default=False, null=True, blank=True)
+    public_speaking = models.BooleanField(default=False, null=True, blank=True)
     
     def __str__(self):
         return self.username

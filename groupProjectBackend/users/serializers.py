@@ -15,7 +15,7 @@ class CustomUserSerializer(serializers.Serializer):
     banner_photo = serializers.URLField()
     location = serializers.CharField(max_length=30)
     social_link = serializers.CharField(max_length=255)
-    bio = serializers.TextField(max_length=500)
+    bio = serializers.CharField(max_length=500)
     coffee = serializers.BooleanField()
     mentoring = serializers.BooleanField()
     tutoring = serializers.BooleanField()

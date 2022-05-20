@@ -7,7 +7,7 @@ from django.contrib.auth.password_validation import validate_password
 # This is the create profile section?
 class CustomUserSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
-    # username = serializers.CharField(max_length=200)
+    username = serializers.CharField(max_length=200)
     email = serializers.CharField(max_length=200)
     avatar = serializers.URLField()
     bio = serializers.CharField(max_length=600)
@@ -38,7 +38,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name')
+        fields = ('user_name', 'password', 'password2', 'email', 'first_name', 'last_name')
         extra_kwargs = {
             'first_name': {'required': True},
             'last_name': {'required': True}
@@ -58,7 +58,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             last_name=validated_data['last_name']
         )
 
-        
         user.set_password(validated_data['password'])
         user.save()
 

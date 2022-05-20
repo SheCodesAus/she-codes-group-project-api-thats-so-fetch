@@ -1,13 +1,10 @@
-# from django.db import models
+from django.db import models
 # from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
-
 #PermissionsMixin adds in user to django permision framework 
-
-
 
 class CustomAccountManager(BaseUserManager):
 
@@ -38,9 +35,7 @@ class CustomAccountManager(BaseUserManager):
         user.save()
         return user
 
-
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-
     email = models.EmailField(_('email address'), unique=True)
     user_name = models.CharField(max_length=150, unique=True, null=True, blank=True)
     first_name = models.CharField(max_length=150, blank=True, null=True)

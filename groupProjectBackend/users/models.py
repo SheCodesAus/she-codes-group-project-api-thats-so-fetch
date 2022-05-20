@@ -41,8 +41,8 @@ class CustomUser(AbstractUser):
     profile_photo = models.URLField(null=True, blank=True)
     banner_photo = models.URLField(null=True, blank=True)
     location = models.CharField(max_length=30, blank=True, null=True)
-    social_link = models.CharField(max_length=255, null=True, blank=True, unique=True)
-    bio = models.TextField(max_length=500, blank=True, null=True)
+    social_link = models.URLField(max_length=255, null=True, blank=True, unique=True)
+    bio = models.CharField(max_length=500, blank=True, null=True)
     # interests??
     
     def __str__(self):

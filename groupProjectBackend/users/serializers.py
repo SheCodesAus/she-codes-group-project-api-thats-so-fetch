@@ -7,11 +7,14 @@ from django.contrib.auth.password_validation import validate_password
 # This is the create profile section?
 class CustomUserSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
-    username = serializers.CharField(max_length=200)
-    email = serializers.CharField(max_length=200)
-    avatar = serializers.URLField()
+    is_mentor = serializers.BooleanField(default=False)
+    is_student = serializers.BooleanField(default=False)
+    profile_photo = serializers.URLField(null=True, blank=True)
+    banner_photo = serializers.URLField(null=True, blank=True)
+    location = serializers.CharField(max_length=30, blank=True, null=True)
+    social_link = serializers.URLField(max_length=255, null=True, blank=True, unique=True)
     bio = serializers.CharField(max_length=600)
-    website = serializers.URLField()
+
 
     def create(self, validated_data):
           return CustomUser.objects.create(**validated_data)

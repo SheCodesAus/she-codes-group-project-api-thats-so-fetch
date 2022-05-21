@@ -6,6 +6,8 @@ from django.contrib.auth.models import AbstractUser
 # the below imports are from the django.contrib.auth.models (line 5) 
 # AbstractBaseUser, PermissionsMixin, BaseUserManager
 
+#spelling_error
+
 #PermissionsMixin adds in user to django permision framework 
 
 # class CustomAccountManager(BaseUserManager):

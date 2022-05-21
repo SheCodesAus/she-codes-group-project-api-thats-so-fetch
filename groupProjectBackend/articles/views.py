@@ -72,6 +72,11 @@ class ArticlesDetail(APIView):
         else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def delete(self, request, pk):
+        articles = self.get_object(pk)
+        articles.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 #CategorySerializer add in later
 
 

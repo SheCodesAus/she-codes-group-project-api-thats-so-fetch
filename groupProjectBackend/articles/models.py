@@ -4,44 +4,18 @@ from django.contrib.auth import get_user_model
 
 class Articles(models.Model):
     title = models.CharField(max_length=200)
-    description = models.TextField()
-    goal = models.IntegerField()
-    # goal_date = models.DateTimeField()
+    pub_date = models.DateTimeField()
+    content = models.CharField(max_length=300)
     image = models.URLField()
-    is_open = models.BooleanField()
-    date_created = models.DateTimeField()
-    # owner = models.CharField(max_length=200)
-    owner = models.ForeignKey(
-        get_user_model(),
-        on_delete=models.CASCADE,
-        related_name='owner_projects'
-        )
-
     category = models.ForeignKey(
         'Category',
         null=True, blank=True,
         on_delete=models.CASCADE,
-        related_name='project_id'
+        related_name='article_id'
     )
 
     def __str__(self):
         return self.title
-
-
-class Comment(models.Model):
-    message = models.CharField(max_length=200)
-    anonymous = models.BooleanField()
-    articals = models.ForeignKey(
-        'Articles',
-        on_delete=models.CASCADE,
-        related_name='Comment'
-    )
-    # supporter =models.CharField(max_length=200)
-    supporter = models.ForeignKey(
-        get_user_model(),
-        on_delete=models.CASCADE,
-        related_name='supporter_comment'
-        )
 
 class Category(models.Model):
     category_name = models.CharField(max_length=200)
@@ -49,3 +23,17 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
+
+# class Comment(models.Model):
+#     message = models.CharField(max_length=200)
+#     anonymous = models.BooleanField()
+#     articles = models.ForeignKey(
+#         'Articles',
+#         on_delete=models.CASCADE,
+#         related_name='Comment'
+#     )
+#     commenter = models.ForeignKey(
+#         get_user_model(),
+#         on_delete=models.CASCADE,
+#         related_name='comments'
+#         )

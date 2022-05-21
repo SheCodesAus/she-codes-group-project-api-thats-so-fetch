@@ -1,17 +1,25 @@
 
 from rest_framework import serializers
 from .models import CustomUser
-from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
+# This is the create profile section?
 class CustomUserSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
     username = serializers.CharField(max_length=200)
     email = serializers.CharField(max_length=200)
-    avatar = serializers.URLField()
-    bio = serializers.CharField(max_length=600)
-    website = serializers.URLField()
+    is_mentor = serializers.BooleanField()
+    is_student = serializers.BooleanField()
+    profile_photo = serializers.URLField()
+    banner_photo = serializers.URLField()
+    location = serializers.CharField(max_length=30)
+    social_link = serializers.CharField(max_length=255)
+    bio = serializers.CharField(max_length=500)
+    coffee = serializers.BooleanField()
+    mentoring = serializers.BooleanField()
+    tutoring = serializers.BooleanField()
+    public_speaking = serializers.BooleanField()
 
     def create(self, validated_data):
           return CustomUser.objects.create(**validated_data)
@@ -20,13 +28,22 @@ class CustomUserSerializer(serializers.Serializer):
 class CustomUserDetailSerializer(CustomUserSerializer):
         def update(self, instance, validated_data):
             instance.username = validated_data.get('username',instance.username)
-            instance.avatar = validated_data.get('avatar', instance.avatar)
-            instance.bio = validated_data.get('bio', instance.bio)
-            instance.website = validated_data.get('website', instance.website)
+            instance.email = validated_data.get('email',instance.email)
+            instance.is_mentor = validated_data.get('is_mentor',instance.is_mentor)
+            instance.is_student = validated_data.get('is_student',instance.is_student)
+            instance.profile_photo = validated_data.get('profile_photo',instance.profile_photo)
+            instance.banner_photo = validated_data.get('banner_photo',instance.banner_photo)
+            instance.location = validated_data.get('location',instance.location)
+            instance.social_link = validated_data.get('social_link',instance.social_link)
+            instance.bio = validated_data.get('bio',instance.bio)
+            instance.coffee = validated_data.get('coffee',instance.coffee)
+            instance.mentoring = validated_data.get('mentoring',instance.mentoring)
+            instance.tutoring = validated_data.get('tutoring',instance.tutoring)
+            instance.public_speaking = validated_data.get('public_speaking',instance.public_speaking)
             instance.save()
             return instance
 
-
+# Create a user account
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
             required=True,
@@ -38,7 +55,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'password', 'password2', 'email', 'first_name', 'last_name')
+        fields = ('first_name', 'last_name', 'username', 'email', 'password', 'password2')
         extra_kwargs = {
             'first_name': {'required': True},
             'last_name': {'required': True}
@@ -52,13 +69,11 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = CustomUser.objects.create(
-            username=validated_data['username'],
-            email=validated_data['email'],
             first_name=validated_data['first_name'],
-            last_name=validated_data['last_name']
+            last_name=validated_data['last_name'],
+            username=validated_data['username'],
+            email=validated_data['email'], 
         )
-
-        
         user.set_password(validated_data['password'])
         user.save()
 

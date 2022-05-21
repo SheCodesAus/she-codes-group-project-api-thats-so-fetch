@@ -54,6 +54,6 @@ class CustomUserDetail(APIView):
 
 class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
-    permissions_clsasses = [permissions.AllowAny,]
+    permissions_classes = [permissions.AllowAny,]
     queryset = CustomUser.objects.all()
 

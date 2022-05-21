@@ -2,45 +2,48 @@ from django.shortcuts import render
 from rest_framework import status, generics, permissions 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import  Articles, Comment
-
+from .models import  Articles 
 from django.http import Http404
 from rest_framework import status
 from .permissions import  IsOwnerOrReadOnly
-from .serializers import (
-    CommentSerializer,
-    ArticlesDetailSerializer,
-    
-)
-
-#CategorySerializer add in later
+from .serializers import ArticlesSerializer, ArticlesDetailSerializer
 
 
-class CommentList(APIView):
+class ArticlesList(APIView):
+    permission_classes = [
+            permissions.IsAuthenticatedOrReadOnly, 
+            IsOwnerOrReadOnly
+        ]
 
     def get(self, request):
-        comments = Comment.objects.all()
-        serializer = CommentSerializer(comments, many=True)
-        return Response(serializer.data)
+        articles = Articles.objects.all()
         
+        order_by = request.query_params.get('order_by', None)
+        if order_by:
+            articles = articles.order_by(order_by)
+
+        serializer = ArticlesSerializer(articles, many=True)
+        return Response(serializer.data)
+
     def post(self, request):
-        serializer = CommentSerializer(data=request.data)
+        serializer = ArticlesSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(supporter=request.user)
+            serializer.save(author=request.user)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
-                )
-        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-
-
+            )
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+            )
 
 class ArticlesDetail(APIView):
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,
         IsOwnerOrReadOnly
-    ]
-        
+    ]   
+
     def get_object(self, pk):
         try:
             # return Articles.objects.get(pk=pk)
@@ -50,7 +53,6 @@ class ArticlesDetail(APIView):
         except Articles.DoesNotExist:
             raise Http404
 
-        
     def get(self, request, pk):
         articles = self.get_object(pk)
         serializer = ArticlesDetailSerializer(articles)
@@ -69,3 +71,23 @@ class ArticlesDetail(APIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
         else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+#CategorySerializer add in later
+
+
+# class CommentList(APIView):
+
+#     def get(self, request):
+#         comments = Comment.objects.all()
+#         serializer = CommentSerializer(comments, many=True)
+#         return Response(serializer.data)
+        
+#     def post(self, request):
+#         serializer = CommentSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save(supporter=request.user)
+#             return Response(
+#                 serializer.data,
+#                 status=status.HTTP_201_CREATED
+#                 )
+#         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)

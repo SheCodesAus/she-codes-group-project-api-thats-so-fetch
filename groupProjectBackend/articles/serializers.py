@@ -31,17 +31,12 @@ class ArticlesDetailSerializer(ArticlesSerializer):
           instance.save()
           return instance
 
-# maybe someone can suggest a way to buld this 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
+            
 
-# class CategorySerializer(serializers.Serializer):
-#     id = serializers.ReadOnlyField()
-#     category_name = serializers.CharField(max_length=200)
-#     slug = serializers.SlugField()
-        
-#     def create(self, validated_data):
-#         return Category.objects.create(**validated_data)
-# and a link within ProjectSerializer
-# category = CategorySerializer(many=False, read_only=False)
 
 # class CommentSerializer(serializers.Serializer):
 #     id = serializers.ReadOnlyField()

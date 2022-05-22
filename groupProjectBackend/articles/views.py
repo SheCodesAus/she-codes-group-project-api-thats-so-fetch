@@ -6,7 +6,7 @@ from .models import  Articles, Category
 from django.http import Http404
 from rest_framework import status
 from .permissions import  IsOwnerOrReadOnly
-from .serializers import ArticlesSerializer, ArticlesDetailSerializer, CategorySerializer, CategoryDetailSerializer
+from .serializers import ArticlesSerializer, ArticlesDetailSerializer, CategorySerializer
 
 
 class ArticlesList(APIView):
@@ -77,25 +77,17 @@ class ArticlesDetail(APIView):
         articles.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-#CategorySerializer 
+# CategorySerializer
 class CategoryList(generics.ListCreateAPIView):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
 
-class CategoryDetail(APIView):
-    
-    def get_object(self, **kwargs):
-        try:
-            if "slug" in kwargs:
-                return Category.objects.get(slug=kwargs["slug"])
-            return Category.objects.get(pk=kwargs["pk"])
-        except Category.DoesNotExist:
-            raise Http404
-    
-    def get(self, request, **kwargs):
-        category = self.get_object(**kwargs)
-        serializer = CategorySerializer(category)
-        return Response(serializer.data)
+
+class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+    lookup_field = 'slug'
+    lookup_url_kwarg = 'slug'
 
 # class CommentList(APIView):
 

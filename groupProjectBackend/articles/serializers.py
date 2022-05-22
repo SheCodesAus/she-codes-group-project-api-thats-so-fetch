@@ -31,6 +31,19 @@ class ArticlesDetailSerializer(ArticlesSerializer):
           instance.save()
           return instance
 
+
+class CategorySerializer(serializers.Serializer):
+    id = serializers.ReadOnlyField()
+    category_name = serializers.CharField(max_length=200)
+    slug = serializers.SlugField()
+
+class CategoryDetailSerializer(CategorySerializer):
+        def update(self, instance, validated_data):
+            instance.name = validated_data.get('name', instance.name)
+            instance.slug = validated_data.get('slug', instance.slug)
+            instance.save()
+            return instance
+            
 # maybe someone can suggest a way to buld this 
 
 # class CategorySerializer(serializers.Serializer):

@@ -5,23 +5,21 @@ from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
 # This is the create profile section?
-class CustomUserSerializer(serializers.Serializer):
-    id = serializers.ReadOnlyField()
-    is_mentor = serializers.BooleanField()
-    is_student = serializers.BooleanField()
-    profile_photo = serializers.URLField()
-    banner_photo = serializers.URLField()
-    location = serializers.CharField(max_length=30)
-    social_link = serializers.URLField()
-    bio = serializers.CharField(max_length=600)
-    # coffee = serializers.BooleanField()
-    # mentoring = serializers.BooleanField()
-    # tutoring = serializers.BooleanField()
-    # public_speaking = serializers.BooleanField()
 
-    def create(self, validated_data):
-          return CustomUser.objects.create(**validated_data)
+class CustomUserSerializer(serializers.ModelSerializer):
+    # id = serializers.ReadOnlyField()
+    # username = serializers.CharField(max_length=200)
+    # email = serializers.CharField(max_length=200)
+    # avatar = serializers.URLField()
+    # bio = serializers.CharField(max_length=600)
+    # website = serializers.URLField()
 
+    # def create(self, validated_data):
+    #       return CustomUser.objects.create(**validated_data)
+    class Meta:
+        model = CustomUser
+        fields = ('username', 'password')
+        
 
 class CustomUserDetailSerializer(CustomUserSerializer):
         def update(self, instance, validated_data):

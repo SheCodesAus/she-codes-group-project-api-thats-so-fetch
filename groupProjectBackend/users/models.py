@@ -6,6 +6,8 @@ from django.contrib.auth.models import AbstractUser
 # the below imports are from the django.contrib.auth.models (line 5) 
 # AbstractBaseUser, PermissionsMixin, BaseUserManager
 
+#spelling_error
+
 #PermissionsMixin adds in user to django permision framework 
 
 # class CustomAccountManager(BaseUserManager):
@@ -42,12 +44,11 @@ class CustomUser(AbstractUser):
     banner_photo = models.URLField(null=True, blank=True)
     location = models.CharField(max_length=30, blank=True, null=True)
     social_link = models.URLField(max_length=255, null=True, blank=True, unique=True)
-    bio = models.CharField(max_length=600, blank=True, null=True)
-    # INTERESTS
-    # coffee = models.BooleanField(default=False, null=True, blank=True)
-    # mentoring = models.BooleanField(default=False, null=True, blank=True)
-    # tutoring = models.BooleanField(default=False, null=True, blank=True)
-    # public_speaking = models.BooleanField(default=False, null=True, blank=True)
+    bio = models.CharField(max_length=600, blank=True, null=True) 
+    coffee = models.BooleanField(default=False, null=True, blank=True)
+    mentoring = models.BooleanField(default=False, null=True, blank=True)
+    tutoring = models.BooleanField(default=False, null=True, blank=True)
+    public_speaking = models.BooleanField(default=False, null=True, blank=True)
     
     def __str__(self):
         return self.username
@@ -60,4 +61,5 @@ class CustomUser(AbstractUser):
 
     # def __str__(self):
     #     return self.user_name
+
 

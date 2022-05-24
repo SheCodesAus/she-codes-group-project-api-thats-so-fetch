@@ -14,6 +14,10 @@ class CustomUserSerializer(serializers.Serializer):
     location = serializers.CharField(max_length=30)
     social_link = serializers.URLField()
     bio = serializers.CharField(max_length=600)
+    # coffee = serializers.BooleanField()
+    # mentoring = serializers.BooleanField()
+    # tutoring = serializers.BooleanField()
+    # public_speaking = serializers.BooleanField()
 
     def create(self, validated_data):
           return CustomUser.objects.create(**validated_data)
@@ -29,6 +33,10 @@ class CustomUserDetailSerializer(CustomUserSerializer):
             instance.location = validated_data.get('location', instance.location)
             instance.social_link = validated_data.get('social_link', instance.social_link)
             instance.bio = validated_data.get('bio', instance.bio)
+            # instance.coffee = validated_data.get('coffee', instance.coffee)
+            # instance.mentoring = validated_data.get('mentoring', instance.mentoring)
+            # instance.tutoring = validated_data.get('tutoring', instance.tutoring)
+            # instance.public_speaking = validated_data.get('public_speaking', instance.public_speaking)
             instance.save()
             return instance
 
@@ -45,6 +53,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ('first_name', 'last_name', 'username', 'email', 'password', 'password2', 'is_mentor', 'is_student', 'profile_photo', 'banner_photo', 'location', 'social_link', 'bio')
+        # 'coffee', 'mentoring', 'tutoring', 'public_speaking')
         extra_kwargs = {
             'first_name': {'required': True},
             'last_name': {'required': True}

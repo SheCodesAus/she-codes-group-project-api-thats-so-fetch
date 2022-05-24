@@ -6,7 +6,7 @@ urlpatterns = [
     path('', views.CustomUserList.as_view()),
     path('<int:pk>/', views.CustomUserDetail.as_view()),
     path('register/', views.RegisterView.as_view()),
-    # path('login/', views.CustomUserList.as_view()),
+    path('login/', views.CustomUserList.as_view()),
 
 ]
 

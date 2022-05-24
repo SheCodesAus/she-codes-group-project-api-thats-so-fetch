@@ -77,9 +77,6 @@ class ArticlesDetail(APIView):
         articles.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-#CategorySerializer add in later
-
-
 # class CommentList(APIView):
 
 #     def get(self, request):

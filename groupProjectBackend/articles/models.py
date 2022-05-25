@@ -7,13 +7,6 @@ class Articles(models.Model):
     pub_date = models.DateTimeField()
     content = models.CharField(max_length=300)
     image = models.URLField()
-    # author = models.ForeignKey(
-    #     get_user_model(),
-    #     on_delete=models.CASCADE,
-    #     related_name='author_article'
-    #     )
-    # this is a test
-
     category = models.ForeignKey(
         'Category',
         null=True, blank=True,
@@ -39,9 +32,8 @@ class Category(models.Model):
 #         on_delete=models.CASCADE,
 #         related_name='Comment'
 #     )
-#     # supporter =models.CharField(max_length=200)
-#     supporter = models.ForeignKey(
+#     commenter = models.ForeignKey(
 #         get_user_model(),
 #         on_delete=models.CASCADE,
-#         related_name='supporter_comment'
+#         related_name='comments'
 #         )

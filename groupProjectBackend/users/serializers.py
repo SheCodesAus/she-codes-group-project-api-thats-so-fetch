@@ -4,8 +4,6 @@ from .models import CustomUser
 from rest_framework.validators import UniqueValidator
 from django.contrib.auth.password_validation import validate_password
 
-# This is the create profile section?
-
 class CustomUserSerializer(serializers.ModelSerializer):
     # id = serializers.ReadOnlyField()
     # username = serializers.CharField(max_length=200)
@@ -31,10 +29,10 @@ class CustomUserDetailSerializer(CustomUserSerializer):
             instance.location = validated_data.get('location', instance.location)
             instance.social_link = validated_data.get('social_link', instance.social_link)
             instance.bio = validated_data.get('bio', instance.bio)
-            # instance.coffee = validated_data.get('coffee', instance.coffee)
-            # instance.mentoring = validated_data.get('mentoring', instance.mentoring)
-            # instance.tutoring = validated_data.get('tutoring', instance.tutoring)
-            # instance.public_speaking = validated_data.get('public_speaking', instance.public_speaking)
+            instance.coffee = validated_data.get('coffee', instance.coffee)
+            instance.mentoring = validated_data.get('mentoring', instance.mentoring)
+            instance.tutoring = validated_data.get('tutoring', instance.tutoring)
+            instance.public_speaking = validated_data.get('public_speaking', instance.public_speaking)
             instance.save()
             return instance
 

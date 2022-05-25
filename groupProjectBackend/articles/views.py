@@ -2,11 +2,11 @@ from django.shortcuts import render
 from rest_framework import status, generics, permissions 
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import  Articles 
+from .models import  Articles, Category 
 from django.http import Http404
 from rest_framework import status
 from .permissions import  IsOwnerOrReadOnly
-from .serializers import ArticlesSerializer, ArticlesDetailSerializer
+from .serializers import ArticlesSerializer, ArticlesDetailSerializer, CategorySerializer
 
 
 class ArticlesList(APIView):
@@ -76,6 +76,16 @@ class ArticlesDetail(APIView):
         articles = self.get_object(pk)
         articles.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class CategoryList(generics.ListCreateAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+    
+class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = CategorySerializer
+    queryset = Category.objects.all()
+    lookup_field = 'slug'
+    lookup_url_kwarg = 'slug'
 
 # class CommentList(APIView):
 

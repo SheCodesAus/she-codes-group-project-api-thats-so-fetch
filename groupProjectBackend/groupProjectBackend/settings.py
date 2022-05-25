@@ -39,19 +39,16 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 INSTALLED_APPS = [
     'corsheaders',
-    # 'django.contrib.admin',
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework.authtoken',
-    'articles.apps.ArticlesConfig',
     'rest_framework',
-    # 'users.apps.UsersConfig',
-    'users',
-    
-
+    'rest_framework.authtoken',  
+    'articles.apps.ArticlesConfig',
+    'users.apps.UsersConfig',
 ]
 
 
@@ -65,7 +62,6 @@ REST_FRAMEWORK = {
     # 'PAGE_SIZE': 10,
     # 'PAGINATE_BY_PARAM': 'limit'
     
-
 }
 
 AUTH_USER_MODEL = 'users.CustomUser'

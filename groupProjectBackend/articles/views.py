@@ -28,7 +28,8 @@ class ArticlesList(APIView):
     def post(self, request):
         serializer = ArticlesSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(author=request.user)
+            # to add author back in when incorporating comments and likes
+            # serializer.save(author=request.user)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED

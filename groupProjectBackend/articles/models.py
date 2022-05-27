@@ -7,12 +7,13 @@ class Articles(models.Model):
     pub_date = models.DateTimeField()
     content = models.CharField(max_length=300)
     image = models.URLField()
-    category = models.ForeignKey(
-        'Category',
-        null=True, blank=True,
-        on_delete=models.CASCADE,
-        related_name='article_id'
-    )
+    # commenting categories out because it is a class
+    # category = models.ForeignKey(
+    #     'Category',
+    #     null=True, blank=True,
+    #     on_delete=models.CASCADE,
+    #     related_name='article_id'
+    # )
 
     def __str__(self):
         return self.title

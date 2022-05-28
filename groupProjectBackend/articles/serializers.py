@@ -12,7 +12,7 @@ class ArticlesSerializer(serializers.Serializer):
     image = serializers.URLField()
     # author = serializers.ReadOnlyField(source='user.id')
     # comment = CommentSerializer(many=True, read_only=True)
-    category = serializers.SlugRelatedField(slug_field='slug', queryset=Category.objects.all())
+    # category = serializers.SlugRelatedField(slug_field='slug', queryset=Category.objects.all())
     # this is a test
 
     def create(self, validated_data):
@@ -26,7 +26,7 @@ class ArticlesDetailSerializer(ArticlesSerializer):
         #   instance.author = validated_data.get('author', instance.author)
           instance.pub_date = validated_data.get('pub_date', instance.pub_date)
           instance.content = validated_data.get('content', instance.content)
-          instance.category = validated_data.get('category',instance.category)
+        #   instance.category = validated_data.get('category',instance.category)
           instance.image = validated_data.get('image', instance.image)
           instance.save()
           return instance

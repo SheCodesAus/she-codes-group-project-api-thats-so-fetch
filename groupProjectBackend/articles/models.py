@@ -18,12 +18,32 @@ class Articles(models.Model):
     def __str__(self):
         return self.title
 
+
+class Comment(models.Model):
+    comment = models.CharField(max_length=200)
+    anonymous = models.BooleanField()
+    articles = models.ForeignKey(
+        'Articles',
+        on_delete=models.CASCADE,
+        related_name='comment'
+    )
+    # supporter =models.CharField(max_length=200)
+    supporter = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        related_name='supporter_comment'
+        )
+
+
+
 class Category(models.Model):
     category_name = models.CharField(max_length=200)
     slug = models.SlugField(null=True, unique=True, blank=True)
 
     def __str__(self):
         return self.title
+
+
 
 # class Comment(models.Model):
 #     message = models.CharField(max_length=200)

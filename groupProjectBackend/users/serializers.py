@@ -12,11 +12,12 @@ class CustomUserSerializer(serializers.ModelSerializer):
     # bio = serializers.CharField(max_length=600)
     # website = serializers.URLField()
 
-    # def create(self, validated_data):
-    #       return CustomUser.objects.create(**validated_data)
+    def create(self, validated_data):
+        print(validated_data)
+        return CustomUser.objects.create(**validated_data)
     class Meta:
         model = CustomUser
-        fields = ('username', 'password')
+        fields = ('username', 'password', 'is_mentor', 'is_student', 'profile_photo', 'banner_photo', 'location', 'social_link', 'bio', 'coffee', 'mentoring', 'tutoring', 'public_speaking')
         
 
 class CustomUserDetailSerializer(CustomUserSerializer):
@@ -48,8 +49,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('first_name', 'last_name', 'username', 'email', 'password', 'password2', 'is_mentor', 'is_student', 'profile_photo', 'banner_photo', 'location', 'social_link', 'bio')
-        # 'coffee', 'mentoring', 'tutoring', 'public_speaking')
+        fields = ('first_name', 'last_name', 'username', 'email', 'password', 'password2', 'is_mentor', 'is_student', 'profile_photo', 'banner_photo', 'location', 'social_link', 'bio', 'coffee', 'mentoring', 'tutoring', 'public_speaking')
         extra_kwargs = {
             'first_name': {'required': True},
             'last_name': {'required': True}

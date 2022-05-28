@@ -34,7 +34,7 @@ class CustomUserDetail(APIView):
 
     def get(self, request, pk):
         user = self.get_object(pk)
-        serializer = CustomUserSerializer(user)
+        serializer = CustomUserDetailSerializer(user)
         return Response(serializer.data)
 
     def put(self, request, pk):

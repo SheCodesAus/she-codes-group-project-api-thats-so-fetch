@@ -8,15 +8,16 @@ from .serializers import CustomUserSerializer, RegisterSerializer, CustomUserDet
 # View a list of ALL user profiles on the website
 class CustomUserList(APIView):
     def get(self, request):
-          users = CustomUser.objects.all()
-          serializer = CustomUserSerializer(users, many=True)
-          return Response(serializer.data)
+        users = CustomUser.objects.all()
+        serializer = CustomUserSerializer(users, many=True)
+        return Response(serializer.data)
 
     def post(self, request):
+        print(request.data)
         serializer = CustomUserSerializer(data=request.data)
         if serializer.is_valid():
-               serializer.save()
-               return Response(serializer.data)
+            serializer.save()
+            return Response(serializer.data)
         return Response(serializer.errors)
 
 # User Profile View
@@ -34,7 +35,7 @@ class CustomUserDetail(APIView):
 
     def get(self, request, pk):
         user = self.get_object(pk)
-        serializer = CustomUserSerializer(user)
+        serializer = CustomUserDetailSerializer(user)
         return Response(serializer.data)
 
     def put(self, request, pk):

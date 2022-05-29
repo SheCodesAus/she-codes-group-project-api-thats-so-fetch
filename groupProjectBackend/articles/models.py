@@ -2,18 +2,28 @@ from django.db import models
 from django.contrib.auth import get_user_model
 # Create your models here.
 
+class Category(models.Model):
+    category_name = models.CharField(max_length=200)
+    slug = models.SlugField(null=True, unique=True, blank=True)
+
+    def __str__(self):
+        return self.category
+
 class Articles(models.Model):
     title = models.CharField(max_length=200)
     pub_date = models.DateTimeField()
     content = models.CharField(max_length=300)
     image = models.URLField()
-    # commenting categories out because it is a class
-    # category = models.ForeignKey(
-    #     'Category',
-    #     null=True, blank=True,
-    #     on_delete=models.CASCADE,
-    #     related_name='article_id'
+    # author = models.ForeignKey(
+    # get_user_model(),
+    # on_delete=models.CASCADE,
+    # related_name='author_articles', null=True, blank=True
     # )
+    category = models.ManyToManyField(
+        'Category',
+        related_name='articles',
+        related_query_name='articles'
+    )
 
     def __str__(self):
         return self.title
@@ -36,12 +46,7 @@ class Comment(models.Model):
 
 
 
-class Category(models.Model):
-    category_name = models.CharField(max_length=200)
-    slug = models.SlugField(null=True, unique=True, blank=True)
 
-    def __str__(self):
-        return self.title
 
 
 

@@ -14,11 +14,9 @@ class Articles(models.Model):
     pub_date = models.DateTimeField()
     content = models.CharField(max_length=300)
     image = models.URLField()
-    # author = models.ForeignKey(
-    # get_user_model(),
-    # on_delete=models.CASCADE,
-    # related_name='author_articles', null=True, blank=True
-    # )
+    author = models.ForeignKey(
+    get_user_model(),
+    on_delete=models.CASCADE, related_name='author_articles')
     category = models.ManyToManyField(
         'Category',
         related_name='articles',
@@ -45,21 +43,3 @@ class Comment(models.Model):
         )
 
 
-
-
-
-
-
-# class Comment(models.Model):
-#     message = models.CharField(max_length=200)
-#     anonymous = models.BooleanField()
-#     articles = models.ForeignKey(
-#         'Articles',
-#         on_delete=models.CASCADE,
-#         related_name='Comment'
-#     )
-#     commenter = models.ForeignKey(
-#         get_user_model(),
-#         on_delete=models.CASCADE,
-#         related_name='comments'
-#         )

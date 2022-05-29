@@ -16,7 +16,6 @@ class CustomUser(AbstractUser):
     mentoring = models.BooleanField(default=False, null=True, blank=True)
     tutoring = models.BooleanField(default=False, null=True, blank=True)
     public_speaking = models.BooleanField(default=False, null=True, blank=True)
-    skills = models.ManyToManyField(Category, related_name='skills')
     
     def __str__(self):
         return self.username

@@ -1,8 +1,6 @@
 from rest_framework import permissions
 
-
 class IsOwnerOrReadOnly(permissions.BasePermission):
-
     """
     Custom permission to only allow owners of an object to edit it.
     """
@@ -12,8 +10,21 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         # so we'll always allow GET, HEAD or OPTIONS requests.
         if request.method in permissions.SAFE_METHODS:
             return True
-        return obj.owner == request.user
 
+        # Write permissions are only allowed to the author of the post.
+        if hasattr(obj, 'author'):
+            return obj.author == request.user
+        if hasattr(obj, 'user'):
+            return obj.user == request.user
+        return False
+
+
+# class IsOwnerOrReadOnly(permissions.BasePermission):
+    
+#     def has_object_permission(self, request, view, obj):
+#         if request.method in permissions.SAFE_METHODS:
+#             return True
+#         return obj.owner == request.user
 
 # class IsAuthorOrReadOnly(permissions.BasePermission):
 
@@ -25,5 +36,5 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 #         if request.method in permissions.SAFE_METHODS:
 #             return True
 
-#         # Write permissions are only allowed to the owner of the articles.
+#         # Write permissions are only allowed to the owner of the snippet.
 #         return obj.author == request.user or request.user.is_superuser

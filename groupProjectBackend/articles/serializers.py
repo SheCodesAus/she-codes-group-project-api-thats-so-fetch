@@ -27,8 +27,8 @@ class ArticlesSerializer(serializers.Serializer):
     author = serializers.ReadOnlyField(source='author.username')
     # author_id = serializers.ReadOnlyField(source='user.id')
     # = CommentSerializer(many=True, read_only=True)
-    # category = serializers.SlugRelatedField(slug_field='slug', queryset=Category.objects.all())
-    # this is a test
+    category = serializers.SlugRelatedField(slug_field='slug', queryset=Category.objects.all())
+
 
     def create(self, validated_data):
         return Articles.objects.create(**validated_data)
@@ -38,14 +38,14 @@ class ArticlesDetailSerializer(ArticlesSerializer):
     # comments = CommentSerializer(many=True, read_only=True)
 
     def update(self, instance, validated_data):
-          instance.title = validated_data.get('title', instance.title)
-          # instance.author = validated_data.get('author', instance.author)
-          instance.pub_date = validated_data.get('pub_date', instance.pub_date)
-          instance.content = validated_data.get('content', instance.content)
-          instance.category = validated_data.get('category',instance.category)
-          instance.image = validated_data.get('image', instance.image)
-          instance.save()
-          return instance
+        instance.title = validated_data.get('title', instance.title)
+        instance.pub_date = validated_data.get('pub_date', instance.pub_date)
+        instance.content = validated_data.get('content', instance.content)
+        instance.image = validated_data.get('image', instance.image)
+        instance.author = validated_data.get('author', instance.author)
+        instance.category = validated_data.get('category',instance.category)
+        instance.save()
+        return instance
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:

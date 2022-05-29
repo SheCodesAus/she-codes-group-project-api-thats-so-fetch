@@ -30,7 +30,6 @@ class CommentList(APIView):
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class ArticlesList(APIView):
     permission_classes = [
             permissions.IsAuthenticatedOrReadOnly, 
@@ -53,8 +52,8 @@ class ArticlesList(APIView):
 
             serializer.save()
 
-            # to add author back in when incorporating comments and likes
-            # serializer.save(author=request.user)
+        # to add author back in when incorporating comments and likes
+            serializer.save(author=request.user)
 
             return Response(
                 serializer.data,
@@ -114,19 +113,3 @@ class CategoryDetail(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'slug'
     lookup_url_kwarg = 'slug'
 
-# class CommentList(APIView):
-
-#     def get(self, request):
-#         comments = Comment.objects.all()
-#         serializer = CommentSerializer(comments, many=True)
-#         return Response(serializer.data)
-        
-#     def post(self, request):
-#         serializer = CommentSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save(supporter=request.user)
-#             return Response(
-#                 serializer.data,
-#                 status=status.HTTP_201_CREATED
-#                 )
-#         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)

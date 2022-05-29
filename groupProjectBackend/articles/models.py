@@ -17,8 +17,10 @@ class Articles(models.Model):
     author = models.ForeignKey(
     get_user_model(),
     on_delete=models.CASCADE, related_name='author_articles')
-    category = models.ManyToManyField(
+    category = models.ForeignKey(
         'Category',
+        null=True, blank=True,
+        on_delete=models.CASCADE,
         related_name='articles',
         related_query_name='articles'
     )

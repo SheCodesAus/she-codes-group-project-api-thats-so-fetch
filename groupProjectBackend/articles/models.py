@@ -16,7 +16,7 @@ class Articles(models.Model):
     image = models.URLField()
     author = models.ForeignKey(
     get_user_model(),
-    on_delete=models.CASCADE, related_name='author_articles')
+    on_delete=models.CASCADE)
     category = models.ForeignKey(
         'Category',
         null=True, blank=True,

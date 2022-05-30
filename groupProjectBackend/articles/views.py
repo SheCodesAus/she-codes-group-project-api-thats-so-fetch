@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from .models import  Articles, Category, Comment
 from django.http import Http404
 from rest_framework import status
-from .permissions import  IsOwnerOrReadOnly
+from .permissions import IsAuthorOrReadOnly, IsOwnerOrReadOnly
 from .serializers import (
     ArticlesSerializer, ArticlesDetailSerializer, CategorySerializer, CommentSerializer,
 )
@@ -50,20 +50,13 @@ class ArticlesList(APIView):
     def post(self, request):
         serializer = ArticlesSerializer(data=request.data)
         if serializer.is_valid():
-
-            serializer.save()
-
-            # to add author back in when incorporating comments and likes
-            # serializer.save(author=request.user)
-
-            return Response(
-                serializer.data,
-                status=status.HTTP_201_CREATED
+            serializer.save(owner=request.user)
+            return Response(serializer.data,
+            status=status.HTTP_201_CREATED
             )
         return Response(
-            serializer.errors,
-            status=status.HTTP_400_BAD_REQUEST
-            )
+            serializer.errors,status=status.HTTP_400_BAD_REQUEST
+        )
 
 class ArticlesDetail(APIView):
     permission_classes = [

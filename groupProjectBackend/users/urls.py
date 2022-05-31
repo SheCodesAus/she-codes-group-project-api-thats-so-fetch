@@ -4,10 +4,11 @@ from . import views
 
 urlpatterns = [
     path('', views.CustomUserList.as_view()),
-    path('<int:pk>/', views.CustomUserDetail.as_view()),
-    path('register/', views.RegisterView.as_view()),
+    # path('<int:pk>/', views.CustomUserDetail.as_view()),
+    path('register/', views.CustomUserList.as_view()),
     path('login/', views.CustomUserList.as_view()),
-
+    path('profile/<int:pk>/', views.CustomUserDetail.as_view()),
+# to delete "user" from path otherwise it is user/user/register for example
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

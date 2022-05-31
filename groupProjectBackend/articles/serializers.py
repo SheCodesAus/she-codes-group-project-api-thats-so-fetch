@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Articles, Category, Comment
 from django.contrib.auth import get_user_model
+from users.models import CustomUser
 
 User = get_user_model()
 
@@ -10,18 +11,19 @@ class CommentSerializer(serializers.Serializer):
     comment = serializers.CharField(max_length=200)
     anonymous = serializers.BooleanField()
     articles_id = serializers.IntegerField()
-    supporter = serializers.ReadOnlyField(source='supporter.id')
+    # supporter = serializers.ReadOnlyField(source='supporter.id')
 
     def create(self, validated_data):
         return Comment.objects.create(**validated_data)
 
 class CommentDetailSerializer(CommentSerializer):
     
-    def update(self, instance,validated_data):
+    def update(self, instance, validated_data):
         instance.comment = validated_data.get('comment', instance.comment)
         instance.anonymous = validated_data.get('anonymous', instance.anonymous)
         instance.articles_id = validated_data.get('articles_id', instance.articles_id)
-        instance.supporter = validated_data.get('supporter', instance.supporter_id)
+        # instance.supporter = validated_data.get('supporter', instance.supporter_id)
+        return instance
 
 class ArticlesSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()

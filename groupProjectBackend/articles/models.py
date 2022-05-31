@@ -7,6 +7,11 @@ class Articles(models.Model):
     pub_date = models.DateTimeField()
     content = models.CharField(max_length=300)
     image = models.URLField()
+    owner = models.ForeignKey(
+    get_user_model(),
+    on_delete=models.CASCADE,
+    related_name='owner_articles'
+    )
     # commenting categories out because it is a class
     # category = models.ForeignKey(
     #     'Category',

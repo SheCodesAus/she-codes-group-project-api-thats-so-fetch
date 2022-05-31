@@ -21,7 +21,7 @@ class CommentList(APIView):
     def post(self, request):
         serializer = CommentSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(supporter=request.user)
+            serializer.save(user=request.user)
             return Response(
                 serializer.data,
                 status=status.HTTP_201_CREATED
@@ -29,8 +29,9 @@ class CommentList(APIView):
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 class CommentDetail(APIView):
-    # permission_classes = [
-    #     permissions.IsAuthenticatedOrReadOnly,
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly,
+    ]
     #     IsOwnerOrReadOnly
     # ]
     # I've commented this out and it has solved my attribute error of comment not having an owner. In serializers, there is a supporter
@@ -53,7 +54,7 @@ class CommentDetail(APIView):
         comment = self.get_object(pk)
         data = request.data
         serializer = CommentDetailSerializer(
-            instance=articles,
+            instance=comment,
             data=data,
             partial=True
         )

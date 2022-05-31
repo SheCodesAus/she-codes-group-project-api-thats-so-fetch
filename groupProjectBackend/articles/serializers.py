@@ -24,7 +24,7 @@ class ArticlesSerializer(serializers.Serializer):
     content = serializers.CharField(max_length=300)
     image = serializers.URLField()
     comments = CommentSerializer(many=True, read_only=True)
-    owner = serializers.ReadOnlyField(source='owner.username')
+    owner = serializers.ReadOnlyField(default=True, source='owner.username')
     # author = serializers.ReadOnlyField(source='user.id')
     # = CommentSerializer(many=True, read_only=True)
     # category = serializers.SlugRelatedField(slug_field='slug', queryset=Category.objects.all())

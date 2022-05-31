@@ -7,13 +7,12 @@ from django.http import Http404
 from rest_framework import status
 from .permissions import IsAuthorOrReadOnly, IsOwnerOrReadOnly
 from .serializers import (
-    ArticlesSerializer, ArticlesDetailSerializer, CategorySerializer, CommentSerializer,
+    ArticlesSerializer, ArticlesDetailSerializer, CategorySerializer, CommentSerializer, CommentDetailSerializer,
 )
 
 
 class CommentList(APIView):
-    
-    
+       
     def get(self, request):
         comments = Comment.objects.all()
         serializer = CommentSerializer(comments, many=True)
@@ -29,6 +28,45 @@ class CommentList(APIView):
                 )
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
+class CommentDetail(APIView):
+    # permission_classes = [
+    #     permissions.IsAuthenticatedOrReadOnly,
+    #     IsOwnerOrReadOnly
+    # ]
+    # I've commented this out and it has solved my attribute error of comment not having an owner. In serializers, there is a supporter
+    # Need second eyes on this
+
+    def get_object(self, pk):
+        try:
+            comment = Comment.objects.get(pk=pk)
+            self.check_object_permissions(self.request, comment)
+            return comment
+        except Comment.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        comment = self.get_object(pk)
+        serializer = CommentDetailSerializer(comment)
+        return Response(serializer.data)
+    
+    def put(self, request, pk):
+        comment = self.get_object(pk)
+        data = request.data
+        serializer = CommentDetailSerializer(
+            instance=articles,
+            data=data,
+            partial=True
+        )
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        comment = self.get_object(pk)
+        comment.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class ArticlesList(APIView):

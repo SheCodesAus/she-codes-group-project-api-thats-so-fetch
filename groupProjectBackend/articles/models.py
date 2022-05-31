@@ -40,7 +40,6 @@ class Comment(models.Model):
         )
 
 
-
 class Category(models.Model):
     category_name = models.CharField(max_length=200)
     slug = models.SlugField(null=True, unique=True, blank=True)

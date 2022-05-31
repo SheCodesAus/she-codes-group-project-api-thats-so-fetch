@@ -15,7 +15,13 @@ class CommentSerializer(serializers.Serializer):
     def create(self, validated_data):
         return Comment.objects.create(**validated_data)
 
-
+class CommentDetailSerializer(CommentSerializer):
+    
+    def update(self, instance,validated_data):
+        instance.comment = validated_data.get('comment', instance.comment)
+        instance.anonymous = validated_data.get('anonymous', instance.anonymous)
+        instance.articles_id = validated_data.get('articles_id', instance.articles_id)
+        instance.supporter = validated_data.get('supporter', instance.supporter_id)
 
 class ArticlesSerializer(serializers.Serializer):
     id = serializers.ReadOnlyField()
@@ -34,7 +40,6 @@ class ArticlesSerializer(serializers.Serializer):
         return Articles.objects.create(**validated_data)
 
 class ArticlesDetailSerializer(ArticlesSerializer):
-    comments = CommentSerializer(many=True, read_only=True)
     comments = CommentSerializer(many=True, read_only=True)
 
     def update(self, instance, validated_data):

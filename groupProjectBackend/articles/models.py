@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 class Articles(models.Model):
     title = models.CharField(max_length=200)
     pub_date = models.DateTimeField()
-    content = models.CharField(max_length=300)
+    content = models.CharField(max_length=6000)
     image = models.URLField()
     owner = models.ForeignKey(
     get_user_model(),

@@ -1,17 +1,18 @@
-# from django.contrib import admin
-# from .models import Articles, Comment
+from django.contrib import admin
+from .models import Articles, Comment
 
 # # Register your models here.
 
-# class ArticlesAdmin(admin.ModelAdmin):
-#     list_display = ['id', 'title', 'description', 'goal', 'category', 'date_created']
+class ArticlesAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'pub_date', 'content',
+    'image', 'owner']
 
-# admin.site.register(Articles, ArticlesAdmin)
+admin.site.register(Articles, ArticlesAdmin)
 
-# class CommentAdmin(admin.ModelAdmin):
-#     list_display = ['comment', 'anonymous', 'articles'] 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ['comment', 'anonymous', 'articles', 'supporter'] 
 
-# admin.site.register(Comment, CommentAdmin)
+admin.site.register(Comment, CommentAdmin)
 
 
 

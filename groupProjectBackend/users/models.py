@@ -10,7 +10,7 @@ class CustomUser(AbstractUser):
     banner_photo = models.URLField(null=True, blank=True)
     location = models.CharField(max_length=30, blank=True, null=True)
     social_link = models.URLField(max_length=255, null=True, blank=True, unique=True)
-    bio = models.CharField(max_length=600, blank=True, null=True) 
+    bio = models.CharField(max_length=6000, blank=True, null=True) 
     coffee = models.BooleanField(default=False, null=True, blank=True)
     mentoring = models.BooleanField(default=False, null=True, blank=True)
     tutoring = models.BooleanField(default=False, null=True, blank=True)
